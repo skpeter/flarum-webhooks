@@ -57,9 +57,14 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
         return [
             'title'       => substr($response->title, 0, 256),
             'url'         => $response->url,
+            'discussion_id'   => $response->event->post->discussion_id,
+            'created_at'   => $response->event->post->created_at,
+            'post_id'   => $response->event->post->id,
+            'url'         => $response->url,
             'description' => $response->description ? substr($response->description, 0, 2048) : null,
             'author'      => $response->author->exists ? [
                 'name'     => substr($response->author->display_name, 0, 256),
+		        'email' => $response->author->email,
                 'url'      => $response->getAuthorUrl(),
                 'icon_url' => $response->author->avatar_url,
             ] : null,
@@ -82,6 +87,7 @@ class Adapter extends \FoF\Webhooks\Adapters\Adapter
      */
     public static function isValidURL(string $url): bool
     {
-        return preg_match('/^https?:\/\/(?:\w+\.)?discord(?:app)?\.com\/api\/webhooks\/\d+?\/.+$/', $url);
+        //return preg_match('/^https?:\/\/(?:\w+\.)?discord(?:app)?\.com\/api\/webhooks\/\d+?\/.+$/', $url);
+        return true;
     }
 }
